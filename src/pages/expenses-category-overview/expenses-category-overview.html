@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+
+    <ion-buttons end *ngIf="trip.currencies.length > 1">
+        <button ion-button icon-only (click)="navigateToTripsConfigPage()">
+          <ion-icon name="md-cog"></ion-icon>
+        </button>
+    </ion-buttons>
+
+    <ion-title>
+      Trip Details: {{ trip.name }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      Expense Categories
+    </ion-card-header>
+
+    <ion-list>
+      <button propertyName="overnight" ion-item (click)="navigateToCategoryDetailPage('Overnight')">  
+        <ion-icon name="star" item-start></ion-icon>
+        Overnight Stay
+      </button>
+
+      <button propertyName="transport" ion-item (click)="navigateToCategoryDetailPage('Transport')">
+        <ion-icon name="plane" item-start></ion-icon>
+        Transport
+      </button>
+      <button propertyName="activity" ion-item (click)="navigateToCategoryDetailPage('Activities')">
+        <ion-icon name="tennisball" item-start></ion-icon>
+        Activities
+      </button>
+
+      <button ion-item (click)="navigateToCategoryDetailPage('Food')">
+        <ion-icon name="pizza" item-start></ion-icon>
+        Food
+      </button>
+
+      <button ion-item (click)="navigateToCategoryDetailPage('Misc')">
+        <ion-icon name="game-controller-b" item-start></ion-icon>
+        Misc
+      </button>
+
+    </ion-list>
+  </ion-card>
+</ion-content>

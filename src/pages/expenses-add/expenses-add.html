@@ -1,0 +1,81 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add Expense</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="form">
+    <ion-list>
+      <p *ngIf="submitAttempt" class="formError">Please fill out all details accurately.</p>
+      <ion-item>
+        <ion-label stacked primary>Description</ion-label>
+        <ion-input type="text" formControlName="description" autocapitalize="on" required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.description.valid && submitAttempt">
+          <p class="formError">Please enter a valid description.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked primary>Total Price</ion-label>
+        <ion-input type="text" formControlName="totalPrice" autocapitalize="on" required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.totalPrice.valid && submitAttempt">
+          <p class="formError">Please enter a valid total price.</p>
+      </ion-item>
+
+      <ion-item *ngIf="currencies.length > 1">
+        <ion-label stacked primary>Currency</ion-label>
+        <ion-select formControlName="selectedCurrencies">
+          <ion-option *ngFor="let currency of currencies" [value]="currency">{{currency.code}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.selectedCurrencies.valid && submitAttempt">
+          <p class="formError">Please select a valid currency.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked primary>Date</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" formControlName="date"></ion-datetime>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.date.valid && submitAttempt">
+          <p class="formError">Please enter a date.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked primary>Split Method</ion-label>
+        <ion-select formControlName="selectedSplitMethod">
+          <ion-option *ngFor="let method of splitMethods" [value]="method">{{ method }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.selectedSplitMethod.valid && submitAttempt">
+          <p class="formError">Please enter a split method.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked primary>Paid By</ion-label>
+        <ion-select formControlName="selectedPaidBy" multiple="true">
+          <ion-option *ngFor="let participant of participants" [value]="participant">{{participant.firstname}} {{participant.lastname}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.selectedPaidBy.valid && submitAttempt">
+          <p class="formError">Please enter a person that paid.</p>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label stacked primary>Participants</ion-label>
+        <ion-select multiple="true" formControlName="selectedParticipants" multiple="true">
+          <ion-option *ngFor="let participant of participants" [value]="participant">{{participant.firstname}} {{participant.lastname}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.selectedParticipants.valid && submitAttempt">
+          <p class="formError">Please enter a person that participated with this expense.</p>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button full color="success" (click)="addExpense()">{{buttonText}}</button>
+  </form>
+</ion-content>

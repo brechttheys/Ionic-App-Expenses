@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Configuring trip: {{trip.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-card>
+      <ion-item>
+        <ion-card-header>
+          Current rates
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let tripRate of rates">{{tripRate.from.code}}
+              <ion-icon name="arrow-forward"></ion-icon> {{tripRate.to.code}}: {{tripRate.multiplier}}
+              <button ion-button clear item-end (click)="changeRate(tripRate)">Change</button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-item>
+    </ion-card>
+    <br>
+
+    <ion-card>
+      <ion-item>
+        <ion-label>Display Currency</ion-label>
+        <ion-select [(ngModel)]="displayCurrency.code" multiple="false">
+          <ion-option *ngFor="let currency of currencies" [value]="currency.code">{{currency.code}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <button ion-button full color="success" (click)="changeDisplayCurrency()">Change display currency</button>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,114 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{expense.description}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h2>General Information</h2>
+  <ion-list>
+    <ion-item>
+      <h3>Total Amount: {{expense.totalPrice}}</h3>
+    </ion-item>
+    <ion-item>
+      <h3>Method of split: {{expense.splitMethod}}</h3>
+    </ion-item>
+    <ion-item>
+      <h3>Category: {{expense.category}}</h3>
+    </ion-item>
+    <ion-item>
+      <h3>Original currency: {{expense.originalCurrency.code}}</h3>
+    </ion-item>
+    <ion-item>
+      <h3 *ngIf="expense.originalCurrency.code == expense.currency.code">Altered currency: no</h3>
+      <h3 *ngIf="expense.originalCurrency.code !== expense.currency.code">Altered currency: yes</h3>
+    </ion-item>
+    <ion-item *ngIf="expense.originalCurrency.code !== expense.currency.code">
+      <h3>Display currency: {{expense.currency.code}}</h3>
+    </ion-item>
+    <ion-item>
+      <h3>Day of expense: {{expense.date | date: 'dd/MM/yyyy'}} </h3>
+    </ion-item>
+  </ion-list>
+
+  <div style="padding-bottom: 30px;">
+    <h2>Participants</h2>
+    <ion-grid>
+      <ion-row style="border: 1px solid #000">
+        <ion-col col-4 style="font-weight: bold">First name</ion-col>
+        <ion-col col-4 style="font-weight: bold">Last name</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let contact of expense.participants" style="border: 1px solid #000">
+        <ion-col col-4>{{contact.firstname}}</ion-col>
+        <ion-col col-4>{{contact.lastname}} </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div style="padding-bottom: 30px;">
+    <h2>Paid By
+        <span *ngIf="expense.originalCurrency.code == expense.currency.code"> - original </span>   
+        <span *ngIf="expense.originalCurrency.code != expense.currency.code"> - altered </span>  
+    </h2>
+    <ion-grid>
+      <ion-row style="border: 1px solid #000">
+        <ion-col col-4 style="font-weight: bold">First name</ion-col>
+        <ion-col col-4 style="font-weight: bold">Last name</ion-col>
+        <ion-col col-4 style="font-weight: bold">Total</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let contact of paidBy" style="border: 1px solid #000">
+        <ion-col col-4>{{contact.firstname}}</ion-col>
+        <ion-col col-4>{{contact.lastname}} </ion-col>
+        <ion-col col-4>{{contact.amount}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div *ngIf="this.expense.splitMethod == 'own share' || 'feeling lucky' || 'divided evenly'">
+    <h2>Expense Per Person     
+      <span *ngIf="expense.originalCurrency.code == expense.currency.code"> - original </span>   
+      <span *ngIf="expense.originalCurrency.code != expense.currency.code"> - original </span>  
+    </h2>
+    <ion-grid>
+      <ion-row style="border: 1px solid #000">
+        <ion-col col-4 style="font-weight: bold">First name</ion-col>
+        <ion-col col-4 style="font-weight: bold">Last name</ion-col>
+        <ion-col col-4 style="font-weight: bold">Total</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let contact of ownShareCost" style="border: 1px solid #000">
+        <ion-col col-4>{{contact.firstname}}</ion-col>
+        <ion-col col-4>{{contact.lastname}} </ion-col>
+        <ion-col col-4>{{contact.amount}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div *ngIf="this.expense.splitMethod == 'way of bill'">
+    <h2>Items</h2>
+    <ion-grid>
+      <ion-row style="border: 1px solid #000">
+        <ion-col col-3 style="font-weight: bold">Description</ion-col>
+        <ion-col col-2 style="font-weight: bold">Price</ion-col>
+        <ion-col col-7 style="font-weight: bold">Assigned To</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let item of expense.expenseItems" style="border: 1px solid #000">
+        <ion-col col-3>{{item.description}}</ion-col>
+        <ion-col col-2>{{item.price}}</ion-col>
+        <ion-col col-7>
+          <span *ngFor="let assignedTo of item.assignedTo; let i = index; let lst = last">{{assignedTo.firstname}} {{assignedTo.lastname}}
+            <span *ngIf="!lst">, </span>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
+</ion-content>

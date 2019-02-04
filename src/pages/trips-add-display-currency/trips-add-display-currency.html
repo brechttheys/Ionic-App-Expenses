@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add a trip: Display currency</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h3>In which currency would you like to display the expenses?</h3>
+  <br>
+
+  <ion-item>
+    <ion-label stacked primary>Display currency</ion-label>
+    <ion-select [(ngModel)]="selectedCurrency" multiple="false">
+      <ion-option *ngFor="let currency of currencies" [value]="currency">{{currency.code}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <br>
+  <br>
+
+  <button ion-button full color="success" (tap)="addTrip()">Add Trip</button>
+</ion-content>

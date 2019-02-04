@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar hideBackButton="true">
+    <ion-buttons left>
+      <button className="leaveButton" ion-button icon-only (click)="leave()">
+        <ion-icon name="md-arrow-round-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="navigateToExpensesAddPage()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{ categoryStr }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item-sliding *ngFor="let expense of expenses">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/trip.jpg">
+        </ion-thumbnail>
+        <h2>{{expense.description}} • {{expense.currency.symbol}}{{expense.totalPrice}} </h2>
+        <p *ngFor="let participant of expense.participants">{{participant.firstname}} •
+          <span class="debt">{{expense.currency.symbol}}{{participant.due}}</span> •
+          <span class="receives">{{expense.currency.symbol}}{{participant.receives}}</span>
+        </p>
+        <button ion-button clear item-end (click)="navigateToExpenseDetailsPage(expense)">View</button>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button expandable color="danger" (click)="deleteExpense(expense)">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

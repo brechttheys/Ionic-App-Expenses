@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ trip.name }}: {{ expense.splitMethod}} </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+
+    <div *ngIf="this.selectedPaidBy.length > 1 && this.expense.splitMethod !== 'feeling lucky'">
+      <h2>Paid by:</h2>
+      <h3>Total price to be paid: {{expense.currency.symbol}}{{ amountToBePaid }}. </h3>
+      <ion-item *ngFor="let participant of expense.selectedPaidBy">
+        <ion-label color="primary" fixed>{{participant.firstname}} {{ participant.lastname}}</ion-label>
+        <ion-input type="text" [id]="participant.id" (ionChange)="changeTotalAmountPaidBy($event, participant.id)" placeholder="0"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!priceValid && submitAttempt">
+        <p class="formError">The total amount that needs to be paid is not 0.</p>
+      </ion-item>
+    </div>
+    <div *ngIf="this.selectedPaidBy.length == 1">
+      <h2>{{expense.selectedPaidBy[0].firstname}} {{ expense.selectedPaidBy[0].lastname}} is paying {{expense.currency.symbol}}{{ amountToBePaid }} </h2>
+    </div>
+    <br>
+    <br>
+
+    <div *ngIf="this.expense.splitMethod == 'own share'">
+      <h2>Split Costs</h2>
+      <h3>Costs: {{expense.currency.symbol}}{{ newAmount }}</h3>
+      <ion-item *ngFor="let participant of expense.selectedParticipants">
+        <ion-label color="primary" fixed>{{participant.firstname}} {{ participant.lastname}}</ion-label>
+        <ion-input type="text" [id]="participant.id" (ionChange)="changeTotalAmount($event, participant.id)" placeholder="0"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!splitValid && submitAttempt">
+        <p class="formError">The total amount of all the splits is not the total cost.</p>
+      </ion-item>
+    </div>
+
+    <div *ngIf="this.expense.splitMethod == 'way of bill'">
+      <h2>Add Items ({{expense.currency.symbol}}{{newAmount}} left)</h2>
+      <p>Please click the button below to add items after which you can assign them.</p>
+      <button ion-button full color="success" (click)="promptAddItem()">Add Item</button>
+      <br>
+      <br>
+
+      <div *ngIf="tmpItemsArr.length > 0">
+        <h2>Items Overview</h2>
+        <ion-item *ngFor="let expenseItem of tmpItemsArr">
+          <ion-label color="primary" fixed>{{expenseItem.description }} {{ expenseItem.price }}</ion-label>
+        </ion-item>
+
+        <h2>Assign Items</h2>
+        <ion-item *ngFor="let expenseItem of tmpItemsArr;  let i = index; trackBy: customTrackBy">
+          <ion-label color="primary" fixed>{{expenseItem.description}}</ion-label>
+          <ion-select multiple="true" (ionChange)="onSelectChange($event, i)">
+            <ion-option *ngFor="let participant of expense.selectedParticipants" [value]="participant">{{participant.firstname}} {{ participant.lastname}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </div>
+      <ion-item *ngIf="!itemSumValid && submitAttempt">
+        <p class="formError">The sum of all the item prices is not equal to the total cost.</p>
+      </ion-item>
+    </div>
+
+
+  </ion-list>
+  <button ion-button full color="success" (click)="addExpense(expenseArr, expensePaidByArr)">Add Expense</button>
+
+</ion-content>

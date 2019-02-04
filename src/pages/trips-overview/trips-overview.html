@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="navigateToTripsAddPage()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Trips Overview</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item-sliding *ngFor="let trip of trips">
+      <ion-item (click)="navigateToTripsDetailsPage(trip)">
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/trip.jpg">
+        </ion-thumbnail>
+        <h2>{{ trip.name }}</h2>
+        <p>{{ trip.country }} • {{ trip.year }}</p>
+        <button ion-button clear item-end>View</button>
+      </ion-item>
+      <ion-item-options>
+          <button ion-button expandable color="danger" (click)="deleteTrip(trip)">
+              <ion-icon name="trash"></ion-icon>
+              Delete
+            </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

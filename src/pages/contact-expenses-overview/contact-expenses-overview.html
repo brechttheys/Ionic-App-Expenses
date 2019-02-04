@@ -1,0 +1,105 @@
+<!--
+  Generated template for the ContactExpensesOverviewPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Expenses for {{contact.firstname}}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <div *ngIf="buttonEnabled">
+        <div *ngFor="let expense of expensesByCategory" style="padding-top: 25px;">
+            <h2>{{expense.category}}</h2>
+            <ion-grid>
+                <ion-row style="border: 1px solid #000">
+                    <ion-col col-3 style="font-weight: bold">Trip Name</ion-col>
+                    <ion-col col-3 style="font-weight: bold">Expense Date</ion-col>
+                    <ion-col col-3 style="font-weight: bold">Due</ion-col>
+                    <ion-col col-3 style="font-weight: bold">Receives</ion-col>
+                </ion-row>
+
+                <ion-row *ngFor="let contactexpense of expense.expenses" style="border: 1px solid #000">
+                    <ion-col col-3>{{contactexpense.tripName}}</ion-col>
+                    <ion-col col-3>{{contactexpense.date}}</ion-col>
+                    <ion-col col-3>{{contactexpense.currencySymbol}}{{contactexpense.toPay}}</ion-col>
+                    <ion-col col-3>{{contactexpense.currencySymbol}}{{contactexpense.toReceive}}</ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+    <div *ngIf="!buttonEnabled">
+        <div *ngFor="let expense of expensesByDate" style="padding-top: 25px;">
+            <h2>{{expense.date}}</h2>
+            <ion-grid>
+                <ion-row style="border: 1px solid #000">
+                    <ion-col col-3 style="font-weight: bold">Trip Name</ion-col>
+                    <ion-col col-3 style="font-weight: bold">Expense Date</ion-col>
+                    <ion-col col-3 style="font-weight: bold">Due</ion-col>
+                    <ion-col col-3 style="font-weight: bold">Receives</ion-col>
+                </ion-row>
+
+                <ion-row *ngFor="let contactexpense of expense.expenses" style="border: 1px solid #000">
+                    <ion-col col-3>{{contactexpense.tripName}}</ion-col>
+                    <ion-col col-3>{{contactexpense.date}}</ion-col>
+                    <ion-col col-3>{{contactexpense.currencySymbol}}{{contactexpense.toPay}}</ion-col>
+                    <ion-col col-3>{{contactexpense.currencySymbol}}{{contactexpense.toReceive}}</ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+    <button ion-button full (click)="switchView()" style="margin-top: 25px;">{{buttonText}}</button>
+</ion-content>
+
+<!-- OLD -->
+<!-- 
+    <button ion-button full (click)="switchView()">{{buttonText}}</button>
+    <div *ngIf="buttonEnabled">
+        <ion-grid *ngFor="let expense of expensesByCategory">
+            <ion-row>
+                <h3>{{expense.category}}</h3>
+            </ion-row>
+            <ion-row *ngFor="let contactexpense of expense.expenses">
+                <ion-col>
+                    <p>{{contactexpense.tripName}}</p>
+                </ion-col>
+                <ion-col>
+                    <p>{{contactexpense.date}}</p>
+                </ion-col>
+                <ion-col>
+                    <p class="toPay">{{contactexpense.currencySymbol}}{{contactexpense.toPay}}</p>
+                </ion-col>
+                <ion-col>
+                    <p class="toReceive">{{contactexpense.currencySymbol}}{{contactexpense.toReceive}}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div *ngIf="!buttonEnabled">
+        <ion-grid *ngFor="let expense of expensesByDate">
+            <ion-row>
+                <h3>{{expense.date}}</h3>
+            </ion-row>
+            <ion-row *ngFor="let contactexpense of expense.expenses">
+                <ion-col>
+                    <p>{{contactexpense.tripName}}</p>
+                </ion-col>
+                <ion-col>
+                    <p>{{contactexpense.date}}</p>
+                </ion-col>
+                <ion-col>
+                    <p class="toPay">{{contactexpense.currencySymbol}}{{contactexpense.toPay}}</p>
+                </ion-col>
+                <ion-col>
+                    <p class="toReceive">{{contactexpense.currencySymbol}}{{contactexpense.toReceive}}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+-->

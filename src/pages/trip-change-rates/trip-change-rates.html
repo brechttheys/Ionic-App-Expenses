@@ -1,0 +1,36 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Edit the rate</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+  <form [formGroup]="form">
+    <ion-list>
+      <ion-item>
+        <h3>Change rate from {{rate.from.code}} to {{rate.to.code}}</h3>
+        <p>Current rate: {{rate.from.symbol}}1 to {{rate.to.symbol}}{{rate.multiplier}}</p>
+      </ion-item>
+      <br>
+      <ion-item>
+        <ion-label stacked primary>New rate: {{rate.from.symbol}}1 equals:</ion-label>
+        <ion-input type="text" formControlName="amount" autocapitalize="on" required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.amount.valid && submitAttempt">
+        <p class="formError">Please enter a valid amount.</p>
+      </ion-item>
+      <ion-item>
+        <button ion-button full color="success" (click)="changeRate(true)">Change rate</button>
+      </ion-item>
+      <br>
+      <ion-item>
+        <button ion-button full color="success" [disabled]="liveRate === -1" (click)="changeRate(false)">Change rate to live rate</button>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

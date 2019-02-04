@@ -1,0 +1,65 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add a trip</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <form [formGroup]="form">
+    <ion-list>
+
+      <p *ngIf="submitAttempt" class="formError">Please fill out all details accurately.</p>
+      <ion-item>
+        <ion-label floating>Trip Name</ion-label>
+        <ion-input type="text" formControlName="name" autocapitalize="on" required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.name.valid && submitAttempt">
+        <p class="formError">Please enter a valid trip name. Maximum of 20 characters.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Country</ion-label>
+        <ion-input type="text" formControlName="country" autocapitalize="on" (change)='getCurrencies()' required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.country.valid && submitAttempt">
+        <p class="formError">Please enter a valid country.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Year</ion-label>
+        <ion-input type="text" formControlName="year" autocapitalize="on" required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.year.valid && submitAttempt">
+        <p class="formError">Please enter a valid year.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked primary>Currency</ion-label>
+        <ion-select formControlName="selectedCurrencies" multiple="true">
+          <ion-option *ngFor="let currency of currencies" [value]="currency">{{currency.code}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.selectedCurrencies.valid && submitAttempt">
+        <p class="formError">Please select a valid currency.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Participants</ion-label>
+        <ion-select multiple="true" formControlName="selectedParticipants">
+          <ion-option *ngFor="let contact of contacts" [value]="contact">{{contact.firstname}} {{contact.lastname}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.selectedParticipants.valid && submitAttempt">
+        <p class="formError">Please select a participant.</p>
+      </ion-item>
+    </ion-list>
+    <br>
+    <br>
+    
+    <button ion-button full color="success" (click)="addTrip()">Add Trip</button>
+  </form>
+</ion-content>

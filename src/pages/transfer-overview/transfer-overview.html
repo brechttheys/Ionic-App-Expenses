@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="navigateToTransfersAddPage()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Transfers Overview</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngFor="let contact of contacts" style="padding-top: 25px;">
+    <h3>{{contact.lastname}} {{contact.firstname}}</h3>
+    <ion-grid>
+      <ion-row style="border: 1px solid #000">
+        <ion-col col-4 style="font-weight: bold; text-align: center">Recipient</ion-col>
+        <ion-col col-2 style="font-weight: bold; text-align: center">Amount</ion-col>
+        <ion-col col-3 style="font-weight: bold; text-align: center">Date</ion-col>
+        <ion-col col-3 style="font-weight: bold; text-align: center">Delete</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let transfer of contact.transfers" style="border: 1px solid #000">
+        <ion-col col-4 style="text-align: center">{{names[transfer.to]}}</ion-col>
+        <ion-col col-2 style="text-align: center">{{ transfer.currency.symbol }}{{ transfer.amount}}</ion-col>
+        <ion-col col-3 style="text-align: center">{{transfer.date | date: 'dd/MM/yyyy'}}</ion-col>
+        <ion-col col-3 style="text-align: center">
+            <button ion-button ion-button expandable color="danger"  (click)="deleteTransfer(transfer)">
+                <ion-icon name="trash"></ion-icon>
+                Delete
+            </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- original 
+  <ion-list>
+    <ion-card *ngFor="let contact of contacts">
+      <ion-item>
+        <ion-card-header>
+          {{contact.lastname}} {{contact.firstname}}
+        </ion-card-header>
+        <ion-card-content>
+
+          <ion-list inset>
+            <ion-item-sliding *ngFor="let transfer of contact.transfers">
+              <ion-item>
+                <p>From {{names[transfer.from]}} to {{names[transfer.to]}}: {{ transfer.currency.symbol }}{{ transfer.amount
+                  }} ({{transfer.date | date: 'dd/MM/yyyy'}})</p>
+              </ion-item>
+              <ion-item-options>
+                  <button ion-button expandable color="danger" (click)="deleteTransfer(transfer)">
+                      <ion-icon name="trash"></ion-icon>
+                      Delete
+                    </button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+
+        </ion-card-content>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+-->
+</ion-content>

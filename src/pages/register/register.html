@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Register
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="form">
+    <ion-list>
+      <p *ngIf="submitAttempt" class="formError">Please fill out all details accurately.</p>
+
+      <ion-item>
+        <ion-label fixed>Username</ion-label>
+        <ion-input type="text" id="username" formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.username.valid && submitAttempt">
+        <p class="formError">Please enter a valid username. 5-20 characters.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Password</ion-label>
+        <ion-input type="password" id="password" formControlName="password" (ionChange)="checkValidPasswords()"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.password.valid && submitAttempt">
+        <p class="formError">Please enter a password. 5-20 characters.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Re-enter password</ion-label>
+        <ion-input type="password" id="password2" formControlName="password2" (ionChange)="checkValidPasswords()"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.password2.valid && submitAttempt">
+        <p class="formError">Please enter the same password.</p>
+      </ion-item>
+      <ion-item *ngIf="passwordsError">
+        <p class="formError">The passwords do not match.</p>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block color="primary" (click)="register()">Register</button>
+  </form>
+</ion-content>

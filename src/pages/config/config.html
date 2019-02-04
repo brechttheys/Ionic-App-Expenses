@@ -1,0 +1,59 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Account settings</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h3>Change your preferred currency</h3>
+  <ion-list>
+    <ion-item>
+      <ion-select [(ngModel)]="selectedGlobalCurrency.code">
+        <ion-option *ngFor="let currency of currencies" [value]="currency.code">{{currency.code}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button full color="success" (click)="changeGlobalCurrency()">Change global currency</button>
+
+  <br>
+  <hr/>
+  <br>
+
+  <form [formGroup]="form">
+    <h3>Change your password</h3>
+
+    <ion-list>
+      <ion-item>
+        <ion-label stacked primary>Enter your new password</ion-label>
+        <ion-input type="text" formControlName="firstPassword" required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.firstPassword.valid && submitAttempt">
+        <p class="formError">Please enter a valid password.</p>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item>
+        <ion-label stacked primary>Re-enter your new password</ion-label>
+        <ion-input type="text" formControlName="secondPassword" required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.secondPassword.valid && submitAttempt">
+        <p class="formError">Please enter a valid password.</p>
+      </ion-item>
+      <ion-item *ngIf="samePasswordsError">
+        <p class="formError">The passwords do not match.</p>
+      </ion-item>
+    </ion-list>
+    <button ion-button full color="success" (click)="changePassword()">Change password</button>
+  </form>
+
+  <br>
+  <hr/>
+  <br>
+
+  <button ion-button full color="danger" (click)="logout()">Log out</button>
+</ion-content>

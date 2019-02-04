@@ -1,0 +1,68 @@
+<!--
+  Generated template for the TripsAddPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add transfer</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <form [formGroup]="form">
+    <ion-list>
+      <p *ngIf="submitAttempt" class="formError">Please fill out all details accurately.</p>
+
+      <ion-item>
+        <ion-label floating>From</ion-label>
+        <ion-select [(ngModel)]="from" formControlName="from" required>
+          <ion-option *ngFor="let contact of contacts" [value]="contact">{{contact.firstname}} {{contact.lastname}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.from.valid && submitAttempt">
+        <p class="formError">Please select the person who gave the money.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>To</ion-label>
+        <ion-select [(ngModel)]="to" formControlName="to" required>
+          <ion-option *ngFor="let contact of contacts" [value]="contact">{{contact.firstname}} {{contact.lastname}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.to.valid && submitAttempt">
+        <p class="formError">Please select the person who received the money.</p>
+      </ion-item>
+      <ion-item *ngIf="!!fromToError">
+        <p class="formError">The person receiving the money cannot be the sender.</p>
+      </ion-item>
+      <br>
+      <br>
+
+      <ion-item>
+        <ion-label stacked primary>Amount (in {{currency.symbol}})</ion-label>
+        <ion-input type="text" formControlName="amount" autocapitalize="on" required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.amount.valid && submitAttempt">
+        <p class="formError">Please enter a valid amount.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked primary>Date</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" formControlName="date"></ion-datetime>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.date.valid && submitAttempt">
+        <p class="formError">Please enter a date.</p>
+      </ion-item>
+      <br>
+      <br>
+
+      <button ion-button full color="success" (click)="addTransfer()">Add Transfer</button>
+    </ion-list>
+  </form>
+</ion-content>
